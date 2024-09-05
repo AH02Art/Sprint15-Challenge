@@ -3,6 +3,12 @@ GET http://localhost:9000/api/jokes
 ####
 
 POST http://localhost:9000/api/auth/register
+Content-Type: application/json
+
+{
+    "username": "Alex",
+    "password": "1234"
+}
 
 ####
 
