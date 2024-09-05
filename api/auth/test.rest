@@ -1,0 +1,11 @@
+GET http://localhost:9000/api/jokes
+
+####
+
+POST http://localhost:9000/api/auth/register
+
+####
+
+POST http://localhost:9000/api/auth/login
+
+####
