@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const Model = require("./auth-model.js");
 const { checkUser } = require("../middleware/auth-middleware.js");
-const { JWT_SECRET } = require("../secrets.js")
+const { JWT_SECRET } = require("../secrets.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -45,7 +45,7 @@ router.post('/register', async (req, res) => {
   }
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', async (req, res, next) => {
   /*
     IMPLEMENT
     You are welcome to build additional middlewares to help with the endpoint's functionality.
@@ -77,9 +77,13 @@ router.post('/login', async (req, res) => {
       res.status(401).json({ message: "invalid credentials" });
     }
     if (bcrypt.compareSync(req.body.password, req.user.password)) {
-      res.json("+++ Passwords synced! +++");
+      const token = buildToken(req.user);
+      res.json({ 
+        message: `welcome, ${req.user.username}`,
+        token
+      });
     } else {
-      res.json("--- There ain't no way. ---");
+      res.json({ message: "invalid credentials" });
     }
   } catch(error) {
     next(error);
@@ -94,6 +98,7 @@ function buildToken(user) {
   const options = {
     expiresIn: "1d"
   };
+  console.log("SECRET =", JWT_SECRET);
   return jwt.sign(payload, JWT_SECRET, options);
 }
 

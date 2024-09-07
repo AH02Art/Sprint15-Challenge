@@ -1,5 +1,5 @@
 require("dotenv").config();
 
 module.exports = {
-    JWT_Secret: process.env.JWT_SECRET || "shh"
+    JWT_SECRET: process.env.JWT_SECRET || "shh"
 }
