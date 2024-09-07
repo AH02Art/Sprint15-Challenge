@@ -19,4 +19,4 @@ Content-Type: application/json
 ####
 
 GET http://localhost:9000/api/jokes
-Authorization: ????
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoyLCJ1c2VybmFtZSI6IkFsZXgiLCJpYXQiOjE3MjU3NDQ3NTgsImV4cCI6MTcyNTgzMTE1OH0.sSGP12IeorTSGdpGqljyAHNwGDGXzAZj6NkHQuTJRGI

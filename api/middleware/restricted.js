@@ -1,7 +1,7 @@
-const { JWT_Secret } = require("../secrets.js");
+const { JWT_SECRET } = require("../../api/secrets.js");
 const jwt = require("jsonwebtoken");
 
-module.exports = (req, res, next) => {
+const restricted = (req, res, next) => {
   /*
     IMPLEMENT
 
@@ -14,10 +14,11 @@ module.exports = (req, res, next) => {
       the response body should include a string exactly as follows: "token invalid".
   */
   const token = req.headers.authorization;
+  console.log("jwtoken =", token);
   if (!token) {
     return next({ status: 401, message: "token required" })
   }
-  jwt.verify(token, JWT_Secret, (error, decodedToken) => {
+  jwt.verify(token, JWT_SECRET, (error, decodedToken) => {
     if (error) {
       next({ status: 401, message: "token invalid" })
     } else {
@@ -25,4 +26,8 @@ module.exports = (req, res, next) => {
       next();
     }
   })
+};
+
+module.exports = {
+  restricted
 };
