@@ -1,11 +1,11 @@
 const router = require('express').Router();
 const Model = require("./auth-model.js");
-const { checkUser } = require("../middleware/auth-middleware.js");
+const { requirements } = require("../middleware/auth-middleware.js");
 const { JWT_SECRET } = require("../secrets.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-router.post('/register', async (req, res) => {
+router.post('/register', requirements, async (req, res, next) => {
   /*
     IMPLEMENT
     You are welcome to build additional middlewares to help with the endpoint's functionality.
@@ -35,11 +35,9 @@ router.post('/register', async (req, res) => {
     const { username, password } = req.body;
     const hash = bcrypt.hashSync(password, 8); // 2 ^ 8
     const data = await Model.add({ username: username.trim(), password: hash });
-    if (!data) {
-      res.status(400).json({ message: "username and password required" });
-    } else {
+    if (data) {
       res.status(201).json(data);
-    }
+    } 
   } catch(error) {
     next(error);
   }
