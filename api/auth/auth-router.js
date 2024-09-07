@@ -70,21 +70,18 @@ router.post('/login', async (req, res, next) => {
       the response body should include a string exactly as follows: "invalid credentials".
   */
   try {
-    const [ user ] = await Model.searchBy({ username: req.body.username });
-    if (user) {
-      req.user = user;
-    } else {
-      res.status(401).json({ message: "invalid credentials" });
+    const [user] = await Model.searchBy({ username: req.body.username });
+    if (!user) {
+      return res.status(401).json({ message: "invalid credentials for username" });
     }
-    if (bcrypt.compareSync(req.body.password, req.user.password)) {
-      const token = buildToken(req.user);
-      res.json({ 
-        message: `welcome, ${req.user.username}`,
-        token
-      });
-    } else {
-      res.json({ message: "invalid credentials" });
+    if (!bcrypt.compareSync(req.body.password, user.password)) {
+      return res.status(401).json({ message: "invalid credentials for password" });
     }
+    const token = buildToken(user);
+    res.json({ 
+      message: `welcome, ${user.username}`,
+      token
+    });
   } catch(error) {
     next(error);
   }
