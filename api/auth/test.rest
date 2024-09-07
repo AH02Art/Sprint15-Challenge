@@ -1,17 +1,22 @@
-GET http://localhost:9000/api/jokes
-
-####
-
 POST http://localhost:9000/api/auth/register
 Content-Type: application/json
 
 {
-    "username": "Alex",
+    "username": "Jacob",
     "password": "1234"
 }
 
 ####
 
 POST http://localhost:9000/api/auth/login
+Content-Type: application/json
+
+{
+    "username": "Lauren",
+    "password": "1234"
+}
 
 ####
+
+GET http://localhost:9000/api/jokes
+Authorization: ????
