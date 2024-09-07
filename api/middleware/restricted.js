@@ -14,17 +14,16 @@ const restricted = (req, res, next) => {
       the response body should include a string exactly as follows: "token invalid".
   */
   const token = req.headers.authorization;
-  console.log("jwtoken =", token);
   if (!token) {
-    return next({ status: 401, message: "token required" })
+    return res.status(401).json({ message: "token required" });
   }
+  // verify the token
   jwt.verify(token, JWT_SECRET, (error, decodedToken) => {
     if (error) {
-      next({ status: 401, message: "token invalid" })
-    } else {
-      req.decodedToken = decodedToken;
-      next();
+      return res.status(401).json({ message: "token invalid" });
     }
+    req.decodedToken = decodedToken;
+    next();
   })
 };
 
