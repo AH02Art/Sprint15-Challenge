@@ -2,8 +2,8 @@ POST http://localhost:9000/api/auth/register
 Content-Type: application/json
 
 {
-    # "username": "Mom",
-    "password": "1234"
+    "username": "Suzie",
+    "password": "5678"
 }
 
 ####
@@ -12,7 +12,7 @@ POST http://localhost:9000/api/auth/login
 Content-Type: application/json
 
 {
-    "username": "Lauren",
+    "username": "Alex",
     "password": "1234"
 }
 

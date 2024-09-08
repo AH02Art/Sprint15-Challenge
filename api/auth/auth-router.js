@@ -1,11 +1,11 @@
 const router = require('express').Router();
 const Model = require("./auth-model.js");
-const { requirements } = require("../middleware/auth-middleware.js");
+const { requirements, checkUsers } = require("../middleware/auth-middleware.js");
 const { JWT_SECRET } = require("../secrets.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-router.post('/register', requirements, async (req, res, next) => {
+router.post('/register', requirements, checkUsers, async (req, res, next) => {
   /*
     IMPLEMENT
     You are welcome to build additional middlewares to help with the endpoint's functionality.
@@ -43,7 +43,7 @@ router.post('/register', requirements, async (req, res, next) => {
   }
 });
 
-router.post('/login', async (req, res, next) => {
+router.post('/login', requirements, async (req, res, next) => {
   /*
     IMPLEMENT
     You are welcome to build additional middlewares to help with the endpoint's functionality.
@@ -68,18 +68,13 @@ router.post('/login', async (req, res, next) => {
       the response body should include a string exactly as follows: "invalid credentials".
   */
   try {
-    const [user] = await Model.searchBy({ username: req.body.username });
-    if (!user) {
+    const [ user ] = await Model.searchBy({ username: req.body.username });
+    if (!user || !bcrypt.compareSync(req.body.password, user.password)) {
       return res.status(401).json({ message: "invalid credentials" });
     }
-    if (!bcrypt.compareSync(req.body.password, user.password)) {
-      return res.status(401).json({ message: "invalid credentials" });
-    }
+    res.user = user;
     const token = buildToken(user);
-    res.json({ 
-      message: `welcome, ${user.username}`,
-      token
-    });
+    res.json({ message: `welcome, ${user.username}`, token });
   } catch(error) {
     next(error);
   }
