@@ -2,8 +2,8 @@ POST http://localhost:9000/api/auth/register
 Content-Type: application/json
 
 {
-    "username": "Suzie",
-    "password": "5678"
+    "username": "Alex",
+    "password": "1234"
 }
 
 ####
@@ -19,4 +19,4 @@ Content-Type: application/json
 ####
 
 GET http://localhost:9000/api/jokes
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoyLCJ1c2VybmFtZSI6IkFsZXgiLCJpYXQiOjE3MjU3NDU3MzYsImV4cCI6MTcyNTgzMjEzNn0.5ZgoYNvZyFSiW1jf0JPSvGodguaTbx8VDUUf-fv7GAA
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoyLCJ1c2VybmFtZSI6IkFsZXgiLCJpYXQiOjE3MjU5MTkyMTgsImV4cCI6MTcyNjAwNTYxOH0.PqxN7haOGqEs3k2xw1zxsLBCbqCgHjk-hu05r3eIHC4
